@@ -1,0 +1,133 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           trucker-timecards
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/trucker-timecards#readme>
+homepage:       https://github.com/githubuser/trucker-timecards#readme
+bug-reports:    https://github.com/githubuser/trucker-timecards/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/trucker-timecards
+
+library
+  exposed-modules:
+      Lucid.Supplemental
+      Navbar
+      TruckerTimecards
+  other-modules:
+      Paths_trucker_timecards
+  hs-source-dirs:
+      src
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DeriveGeneric
+      DerivingStrategies
+      FlexibleInstances
+      GeneralizedNewtypeDeriving
+      InstanceSigs
+      KindSignatures
+      LambdaCase
+      OverloadedStrings
+      TypeApplications
+      TypeOperators
+      QuasiQuotes
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , bytestring
+    , contravariant-extras
+    , directory
+    , hasql
+    , hasql-th
+    , lucid
+    , lucid-htmx ==0.1.0.0
+    , mtl
+    , profunctors
+    , servant
+    , servant-lucid
+    , servant-server
+    , text
+    , time
+    , tuple
+    , vector
+    , warp
+  default-language: Haskell2010
+
+executable trucker-timecards-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_trucker_timecards
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , bytestring
+    , contravariant-extras
+    , directory
+    , hasql
+    , hasql-th
+    , lucid
+    , lucid-htmx ==0.1.0.0
+    , mtl
+    , profunctors
+    , servant
+    , servant-lucid
+    , servant-server
+    , text
+    , time
+    , trucker-timecards
+    , tuple
+    , vector
+    , warp
+  default-language: Haskell2010
+
+test-suite trucker-timecards-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_trucker_timecards
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , async
+    , base >=4.7 && <5
+    , bytestring
+    , contravariant-extras
+    , directory
+    , hasql
+    , hasql-th
+    , lucid
+    , lucid-htmx ==0.1.0.0
+    , mtl
+    , profunctors
+    , servant
+    , servant-lucid
+    , servant-server
+    , text
+    , time
+    , trucker-timecards
+    , tuple
+    , vector
+    , warp
+  default-language: Haskell2010

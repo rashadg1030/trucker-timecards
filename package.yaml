@@ -1,0 +1,81 @@
+name:                trucker-timecards
+version:             0.1.0.0
+github:              "githubuser/trucker-timecards"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2021 Author name here"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/trucker-timecards#readme>
+
+dependencies:
+- aeson
+- async
+- base >= 4.7 && < 5
+- bytestring
+- contravariant-extras
+- directory
+- hasql
+- hasql-th
+- lucid
+- lucid-htmx == 0.1.0.0
+- mtl
+- profunctors
+- servant
+- servant-lucid
+- servant-server
+- text
+- time
+- tuple
+- vector
+- warp
+
+library:
+  source-dirs: src
+  default-extensions:
+    - DataKinds
+    - DeriveAnyClass
+    - DeriveGeneric
+    - DerivingStrategies
+    - FlexibleInstances
+    - GeneralizedNewtypeDeriving
+    - InstanceSigs
+    - KindSignatures
+    - LambdaCase
+    - OverloadedStrings
+    - TypeApplications
+    - TypeOperators
+    - QuasiQuotes
+
+executables:
+  trucker-timecards-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - trucker-timecards
+
+tests:
+  trucker-timecards-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - trucker-timecards
