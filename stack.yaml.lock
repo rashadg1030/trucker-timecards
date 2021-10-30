@@ -19,6 +19,13 @@ packages:
   original:
     hackage: headed-megaparsec-0.2.0.1@sha256:4bb2f1e68d2972e6b40ede202708c81b2e2fe83c454e439f27f47d1fdf7c8697,1571
 - completed:
+    hackage: lucid-alpine-0.1.0.0@sha256:928a975542a8f5b3eb026fe000a5930b4fd5b048928c12057ca0316baa808a08,1769
+    pantry-tree:
+      size: 415
+      sha256: 6ab3e3bd74f40f82bd242f8c0b1d49b80c52b83e49f6a531db4806d7341b0f2f
+  original:
+    hackage: lucid-alpine-0.1.0.0@sha256:928a975542a8f5b3eb026fe000a5930b4fd5b048928c12057ca0316baa808a08,1769
+- completed:
     hackage: lucid-htmx-0.1.0.0@sha256:c861a5d9177fe4cee9f794b5e708ae0dc082899837323f068991e1243cd31744,1525
     pantry-tree:
       size: 497

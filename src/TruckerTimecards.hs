@@ -41,13 +41,18 @@ import Control.Concurrent.Async (race_)
 import System.Directory         (doesFileExist)
 import System.Environment
 
-import Navbar (template1)
+import Navbar (navWithSearch, nav)
+import Lucid.Html5 (defer_, disabled_)
+import Lucid.Supplemental
 
 newtype ID a = ID { unID :: Int32 }
     deriving newtype (Eq, Show, FromHttpApiData)
 
+instance ToHtml (ID a) where
+    toHtml = toHtml . showT
+
 newtype Name = Name { unName :: Text }
-    deriving newtype (Eq, Show, FromJSON)
+    deriving newtype (Eq, Show, FromJSON, ToHtml)
 
 data TruckerFields = TruckerFields
     { truckerFieldsRR2 :: Bool
@@ -150,11 +155,17 @@ data TruckerFormData = TruckerFormData
     }
     deriving (Eq, Show, Generic, FromJSON)
 
-data DataEntryScreen = DataEntryScreen
+data DataEntryScreen = DataEntryScreen (Maybe Trucker)
+
+data TruckerRow = TruckerRow Trucker
+
+data TruckerInputRow = TruckerInputRow (Maybe Trucker)
+
+data NameListScreen = NameListScreen [TruckerRow]
 
 type GetDataEntryScreen = Get '[HTML] DataEntryScreen
 
-type GetTruckers = "trucker" :> Get '[HTML] [Trucker]
+type GetNameListScreen = "trucker" :> Get '[HTML] NameListScreen
 
 type CaptureTruckerID = Capture "trucker-id" (ID Trucker)
 
@@ -171,9 +182,9 @@ type DeleteTrucker = "trucker"
     :> CaptureTruckerID
     :> Delete '[HTML] NoContent
 
-type GetTruckerForm = "trucker-form"
-    :> CaptureTruckerID
-    :> Get '[HTML] TruckerFields
+-- type GetTruckerForm = "trucker-form"
+--     :> CaptureTruckerID
+--     :> Get '[HTML] TruckerFields
 
 type PostTruckerFormData = "trucker-form"
     :> CaptureTruckerID
@@ -181,19 +192,19 @@ type PostTruckerFormData = "trucker-form"
     :> Post '[HTML] NoContent
 
 type API = GetDataEntryScreen
-    :<|> GetTruckers
+    :<|> GetNameListScreen
     :<|> PostTrucker
     :<|> PatchTrucker
     :<|> DeleteTrucker
-    :<|> GetTruckerForm
+    -- :<|> GetTruckerForm
     :<|> PostTruckerFormData
     :<|> Raw
 
 getDataEntryScreenHandler :: Connection.Connection -> Handler DataEntryScreen
-getDataEntryScreenHandler _ = pure DataEntryScreen
+getDataEntryScreenHandler _ = pure $ DataEntryScreen Nothing
 
-getTruckersHandler :: Connection.Connection -> Handler [Trucker]
-getTruckersHandler _ = pure []
+getNameListScreenHandler :: Connection.Connection -> Handler NameListScreen
+getNameListScreenHandler _ = pure $ NameListScreen []
 
 postTruckerHandler :: Connection.Connection -> TruckerData -> Handler Trucker
 postTruckerHandler _ _ = throwError err404
@@ -204,19 +215,19 @@ patchTruckerHandler _ _ _ = throwError err404
 deleteTruckerHandler :: Connection.Connection -> ID Trucker -> Handler NoContent
 deleteTruckerHandler _ _ = throwError err404
 
-getTruckerFormHandler :: Connection.Connection -> ID Trucker -> Handler TruckerFields
-getTruckerFormHandler _ _ = throwError err404
+-- getTruckerFormHandler :: Connection.Connection -> ID Trucker -> Handler Trucker
+-- getTruckerFormHandler _ _ = throwError err404
 
 postTruckerFormDataHandler :: Connection.Connection -> ID Trucker -> TruckerFormData -> Handler NoContent
 postTruckerFormDataHandler _ _ _ = throwError err404
 
 server :: Connection.Connection -> Server API
 server conn = getDataEntryScreenHandler conn
-    :<|> getTruckersHandler conn
+    :<|> getNameListScreenHandler conn
     :<|> postTruckerHandler conn
     :<|> patchTruckerHandler conn
     :<|> deleteTruckerHandler conn
-    :<|> getTruckerFormHandler conn
+    -- :<|> getTruckerFormHandler conn
     :<|> postTruckerFormDataHandler conn
     :<|> serveDirectoryWebApp "/dist"
 
@@ -236,25 +247,177 @@ baseTemplate :: Monad m => Text -> HtmlT m a -> HtmlT m a
 baseTemplate title innerHtml = do
     doctype_
 
-    html_ [lang_ "en"] ""
+    html_ [lang_ "en"] $ do
 
-    head_ $ do
-        meta_ [charset_ "utf-8"]
-        meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1"]
+        head_ $ do
+            meta_ [charset_ "utf-8"]
+            meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1"]
 
-        title_ $ toHtml title
+            title_ $ toHtml title
 
-        link_ [href_ "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css", rel_ "stylesheet"]
-        script_ [src_ "https://unpkg.com/htmx.org@1.5.0"] noHtml
-        script_ [src_ "https://unpkg.com/htmx.org/dist/ext/json-enc.js"] noHtml
+            link_ [href_ "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css", rel_ "stylesheet"]
+            script_ [src_ "https://unpkg.com/alpinejs@3.4.2/dist/cdn.min.js", defer_ ""] noHtml
+            script_ [src_ "https://unpkg.com/htmx.org@1.5.0"] noHtml
+            script_ [src_ "https://unpkg.com/htmx.org/dist/ext/json-enc.js"] noHtml
 
-    body_ innerHtml
+        body_ [id_ "main-content"] innerHtml
 
 instance ToHtml DataEntryScreen where
-    toHtml _ = baseTemplate "Trucker Timecards" $ do
-        template1
+    toHtml (DataEntryScreen mbTrucker) = baseTemplate "Trucker Timecards" $ do
+        navWithSearch
+        div_ [class_ "m-10"] $ do
+            case mbTrucker of
+                Nothing -> do
+                    h1_ [class_ "text-xl font-semibold"] "Use the search bar above to select a trucker for data entry."
+                Just trucker -> do
+                    h1_ [] $ toHtml $ "Trucker " <> showT (truckerName trucker) <> " found"
 
-instance ToHtml [Trucker] where
+instance ToHtml TruckerInputRow where
+    toHtml (TruckerInputRow _) = do
+        -- let rowId = "trucker-row-" <> showT (truckerID trucker)
+
+        tr_ [id_ "777"] $ do
+            td_ [tableCellCss_ ""] "777"
+            td_ [tableCellCss_ ""] "John Doe"
+
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+            disabledToggle_ $ False
+
+            td_ [tableCellCss_ ""] $ do
+                span_ [class_ "flex flex-row justify-center align-middle"] $ do
+                    button_
+                        [ buttonCss_ "mr-2 bg-purple-400"
+                        -- , hxGetSafe_ $ getContactFormLink cID
+                        -- , hxTarget_ $ "#" <> rowId
+                        , hxSwap_ "outerHTML"
+                        ]
+                        "Edit"
+                    button_
+                        [ buttonCss_ "bg-red-400"
+                        -- , hxDeleteSafe_ $ deleteContactLink cID
+                        , hxConfirm_ "Are you sure?"
+                        -- , hxTarget_ $ "#" <> rowId
+                        , hxSwap_ "outerHTML"
+                        ]
+                        "Delete"
+        
+
+instance ToHtml NameListScreen where
+    toHtml (NameListScreen truckerRows) = do
+        nav
+        div_ [class_ "m-10"] $ do
+            table_ [class_ "table-auto rounded-lg"] $ do
+                thead_ [] $
+                    tr_ [] $ do
+                        th_ [tableHeaderCss_ ""] "ID"
+                        th_ [tableHeaderCss_ ""] "Name"
+                        th_ [tableHeaderCss_ ""] "RR2"
+                        th_ [tableHeaderCss_ ""] "THE"
+                        th_ [tableHeaderCss_ ""] "REG1"
+                        th_ [tableHeaderCss_ ""] "REG2"
+                        th_ [tableHeaderCss_ ""] "MILES"
+                        th_ [tableHeaderCss_ ""] "PTP"
+                        th_ [tableHeaderCss_ ""] "BLU"
+                        th_ [tableHeaderCss_ ""] "TRG"
+                        th_ [tableHeaderCss_ ""] "Actions"
+                tbody_ $ do
+                    Prelude.mapM_ toHtml truckerRows
+                    toHtml $ TruckerInputRow Nothing
+
+buttonCss_ :: Text -> Attribute
+buttonCss_ custom = class_ $
+    "px-4 py-2 text-lg text-white rounded-md " <> custom
+
+tableCellCss_ :: Text -> Attribute
+tableCellCss_ custom = class_ $
+    "border-4 items-center justify-center px-4 py-2 text-semibold text-lg text-center " <> custom
+
+tableHeaderCss_ :: Text -> Attribute
+tableHeaderCss_ = tableCellCss_
+
+disabledToggle_ :: Monad m => Bool -> HtmlT m ()
+disabledToggle_ bool = td_ [tableCellCss_ ""] $
+    button_
+        [ type_ "button"
+        , class_ "bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        , role_ "switch"
+        , disabled_ ""
+        ] $ do
+            span_ [class_ "sr-only"] "Use setting"
+            span_ [class_ $ if bool then "translate-x-5" else "translate-x-0" <> " pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow ring-0"] $
+                span_ [class_ "absolute inset-0 h-full w-full flex items-center justify-center"] $
+                    if bool
+                    then do
+                        svg_ [class_ "h-3 w-3 text-indigo-600", fill_ "currentColor", viewBox_ "0 0 12 12"] $
+                            path_ [d_ "M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"]
+                    else do
+                        svg_ [class_ "h-3 w-3 text-gray-400", fill_ "none", viewBox_ "0 0 12 12"] $
+                            path_ [d_ "M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2", stroke_ "currentColor", strokeWidth_ "2", strokeLinecap_ "round", strokeLinejoin_ "round"]
+
+    {-
+        <button type="button" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" role="switch" aria-checked="false">
+            <span class="sr-only">Use setting</span>
+            <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+            <span class="translate-x-0 pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200">
+                <!-- Enabled: "opacity-0 ease-out duration-100", Not Enabled: "opacity-100 ease-in duration-200" -->
+                <span class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">
+                    <svg class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                        <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </span>
+                <!-- Enabled: "opacity-100 ease-in duration-200", Not Enabled: "opacity-0 ease-out duration-100" -->
+                <span class="opacity-0 ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">
+                    <svg class="h-3 w-3 text-indigo-600" fill="currentColor" viewBox="0 0 12 12">
+                        <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                    </svg>
+                </span>
+            </span>
+        </button>
+    -}
+
+
+instance ToHtml TruckerRow where
+    toHtml (TruckerRow trucker) = do
+        let rowId = "trucker-row-" <> showT (truckerID trucker)
+
+        tr_ [id_ rowId] $ do
+            td_ [tableCellCss_ ""] $ toHtml $ truckerID trucker
+            td_ [tableCellCss_ ""] $ toHtml $ truckerName trucker
+
+            let fields = truckerFields trucker
+
+            disabledToggle_ $ truckerFieldsRR2 fields
+            disabledToggle_ $ truckerFieldsTHE fields
+            disabledToggle_ $ truckerFieldsREG1 fields
+            disabledToggle_ $ truckerFieldsREG2 fields
+            disabledToggle_ $ truckerFieldsMILES fields
+            disabledToggle_ $ truckerFieldsPTP fields
+            disabledToggle_ $ truckerFieldsBLU fields
+            disabledToggle_ $ truckerFieldsTRG fields
+
+            td_ [tableCellCss_ ""] $ do
+                span_ [class_ "flex flex-row justify-center align-middle"] $ do
+                    button_
+                        [ buttonCss_ "mr-2 bg-purple-400"
+                        -- , hxGetSafe_ $ getContactFormLink cID
+                        , hxTarget_ $ "#" <> rowId
+                        , hxSwap_ "outerHTML"
+                        ]
+                        "Edit"
+                    button_
+                        [ buttonCss_ "bg-red-400"
+                        -- , hxDeleteSafe_ $ deleteContactLink cID
+                        , hxConfirm_ "Are you sure?"
+                        , hxTarget_ $ "#" <> rowId
+                        , hxSwap_ "outerHTML"
+                        ]
+                        "Delete"
 
 instance ToHtml Trucker where
 

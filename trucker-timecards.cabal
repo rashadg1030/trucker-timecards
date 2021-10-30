@@ -56,6 +56,7 @@ library
     , hasql
     , hasql-th
     , lucid
+    , lucid-alpine ==0.1.0.0
     , lucid-htmx ==0.1.0.0
     , mtl
     , profunctors
@@ -86,6 +87,7 @@ executable trucker-timecards-exe
     , hasql
     , hasql-th
     , lucid
+    , lucid-alpine ==0.1.0.0
     , lucid-htmx ==0.1.0.0
     , mtl
     , profunctors
@@ -118,6 +120,7 @@ test-suite trucker-timecards-test
     , hasql
     , hasql-th
     , lucid
+    , lucid-alpine ==0.1.0.0
     , lucid-htmx ==0.1.0.0
     , mtl
     , profunctors

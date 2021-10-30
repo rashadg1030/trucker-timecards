@@ -86,6 +86,9 @@ localTime_ = with (makeElementNoEnd "local-time")
 gPlusone_ :: Monad m => [Attribute] -> HtmlT m ()
 gPlusone_ = with (makeElementNoEnd "g:plusone")
 
+path_ :: Monad m => [Attribute] -> HtmlT m ()
+path_ = with (makeElementNoEnd "path")
+
 
 
 ------ Attributes --------------------------
@@ -292,3 +295,27 @@ genSvgAttribs =
 :}
 
 -}
+
+fill_ :: Text -> Attribute
+fill_ = makeAttribute "fill"
+
+d_ :: Text -> Attribute
+d_ = makeAttribute "d"
+
+stroke_ :: Text -> Attribute
+stroke_ = makeAttribute "stroke"
+
+strokeWidth_ :: Text -> Attribute
+strokeWidth_ = makeAttribute "stroke-width"
+
+strokeLinecap_ :: Text -> Attribute
+strokeLinecap_ = makeAttribute "stroke-linecap"
+
+strokeLinejoin_ :: Text -> Attribute
+strokeLinejoin_ = makeAttribute "stroke-linejoin"
+
+clipRule_ :: Text -> Attribute
+clipRule_ = makeAttribute "clip-rule"
+
+fillRule_ :: Text -> Attribute
+fillRule_ = makeAttribute "fill-rule"

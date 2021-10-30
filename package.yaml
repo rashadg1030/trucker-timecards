@@ -29,6 +29,7 @@ dependencies:
 - hasql
 - hasql-th
 - lucid
+- lucid-alpine == 0.1.0.0
 - lucid-htmx == 0.1.0.0
 - mtl
 - profunctors
