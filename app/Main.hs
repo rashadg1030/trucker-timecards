@@ -1,6 +1,6 @@
 module Main where
 
-import TruckerTimecards
+import App (prodMain)
 
 main :: IO ()
 main = prodMain

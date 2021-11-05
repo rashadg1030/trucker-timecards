@@ -25,9 +25,20 @@ source-repository head
 
 library
   exposed-modules:
+      API.Definition
+      API.Handler
+      App
+      App.Common
+      App.Data
+      App.Tailwind
+      HTML.Page.DataEntry
+      HTML.Page.NameList
+      HTML.Partial.TruckerInputRow
+      HTML.Partial.TruckerRow
+      HTML.Snippet
       Lucid.Supplemental
-      Navbar
-      TruckerTimecards
+      SQL.Query
+      SQL.Statement
   other-modules:
       Paths_trucker_timecards
   hs-source-dirs:
@@ -55,9 +66,9 @@ library
     , directory
     , hasql
     , hasql-th
-    , lucid
-    , lucid-alpine ==0.1.0.0
-    , lucid-htmx ==0.1.0.0
+    , lucid ==2.9.12.1
+    , lucid-alpine ==0.1.0.2
+    , lucid-htmx ==0.1.0.2
     , mtl
     , profunctors
     , servant
@@ -86,9 +97,9 @@ executable trucker-timecards-exe
     , directory
     , hasql
     , hasql-th
-    , lucid
-    , lucid-alpine ==0.1.0.0
-    , lucid-htmx ==0.1.0.0
+    , lucid ==2.9.12.1
+    , lucid-alpine ==0.1.0.2
+    , lucid-htmx ==0.1.0.2
     , mtl
     , profunctors
     , servant
@@ -119,9 +130,9 @@ test-suite trucker-timecards-test
     , directory
     , hasql
     , hasql-th
-    , lucid
-    , lucid-alpine ==0.1.0.0
-    , lucid-htmx ==0.1.0.0
+    , lucid ==2.9.12.1
+    , lucid-alpine ==0.1.0.2
+    , lucid-htmx ==0.1.0.2
     , mtl
     , profunctors
     , servant

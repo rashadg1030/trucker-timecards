@@ -19,19 +19,26 @@ packages:
   original:
     hackage: headed-megaparsec-0.2.0.1@sha256:4bb2f1e68d2972e6b40ede202708c81b2e2fe83c454e439f27f47d1fdf7c8697,1571
 - completed:
-    hackage: lucid-alpine-0.1.0.0@sha256:928a975542a8f5b3eb026fe000a5930b4fd5b048928c12057ca0316baa808a08,1769
+    hackage: lucid-2.9.12.1@sha256:f9e785add5e549f02de5790640cdf49deba32b8685e93c3bc1dee0f2e4ed5a9f,3100
     pantry-tree:
-      size: 415
-      sha256: 6ab3e3bd74f40f82bd242f8c0b1d49b80c52b83e49f6a531db4806d7341b0f2f
+      size: 779
+      sha256: 0094eba550dba9bb9303612928316148c0995415595c8c88ff2b082d34b3e16b
   original:
-    hackage: lucid-alpine-0.1.0.0@sha256:928a975542a8f5b3eb026fe000a5930b4fd5b048928c12057ca0316baa808a08,1769
+    hackage: lucid-2.9.12.1@sha256:f9e785add5e549f02de5790640cdf49deba32b8685e93c3bc1dee0f2e4ed5a9f,3100
 - completed:
-    hackage: lucid-htmx-0.1.0.0@sha256:c861a5d9177fe4cee9f794b5e708ae0dc082899837323f068991e1243cd31744,1525
+    hackage: lucid-alpine-0.1.0.2@sha256:a573246c4ac5dd3c0fa420c3bb19df0b105ae9baa3d13af066812fffe82f58f0,1742
     pantry-tree:
-      size: 497
-      sha256: afd10581e076737adf25bb03fd01d7952727db25d4bbb55665f1c7ccb462f8d1
+      size: 416
+      sha256: 93c11307166154a2bf091cf32653cd896ea9653e1f213bc79229e38fa761978e
   original:
-    hackage: lucid-htmx-0.1.0.0@sha256:c861a5d9177fe4cee9f794b5e708ae0dc082899837323f068991e1243cd31744,1525
+    hackage: lucid-alpine-0.1.0.2@sha256:a573246c4ac5dd3c0fa420c3bb19df0b105ae9baa3d13af066812fffe82f58f0,1742
+- completed:
+    hackage: lucid-htmx-0.1.0.2@sha256:322e04340544db00f37790293e842d687f0792b1a407e514e4f44c14c782ca09,1507
+    pantry-tree:
+      size: 498
+      sha256: 8002c39032a9ae5a62000303f58c117090c30bc238bf919dbb146957e0cac407
+  original:
+    hackage: lucid-htmx-0.1.0.2@sha256:322e04340544db00f37790293e842d687f0792b1a407e514e4f44c14c782ca09,1507
 - completed:
     hackage: postgresql-syntax-0.4@sha256:df8b65a33f4088eddad25cedbec814e5f34f8e8ae55065139b73bd6da0d66f21,4176
     pantry-tree:
