@@ -19,26 +19,41 @@ packages:
   original:
     hackage: headed-megaparsec-0.2.0.1@sha256:4bb2f1e68d2972e6b40ede202708c81b2e2fe83c454e439f27f47d1fdf7c8697,1571
 - completed:
-    hackage: lucid-2.9.12.1@sha256:f9e785add5e549f02de5790640cdf49deba32b8685e93c3bc1dee0f2e4ed5a9f,3100
+    name: lucid
+    version: 2.10.0
+    git: https://github.com/WaviLabs/lucid
     pantry-tree:
-      size: 779
-      sha256: 0094eba550dba9bb9303612928316148c0995415595c8c88ff2b082d34b3e16b
+      size: 1531
+      sha256: f75ab22c8155d37ce9480b68326949c9f303aadd512e993254b44d759d22130d
+    commit: bd40149c16443256fb34a3e18146fb1499a82ae8
   original:
-    hackage: lucid-2.9.12.1@sha256:f9e785add5e549f02de5790640cdf49deba32b8685e93c3bc1dee0f2e4ed5a9f,3100
+    git: https://github.com/WaviLabs/lucid
+    commit: bd40149c16443256fb34a3e18146fb1499a82ae8
 - completed:
-    hackage: lucid-alpine-0.1.0.2@sha256:a573246c4ac5dd3c0fa420c3bb19df0b105ae9baa3d13af066812fffe82f58f0,1742
+    name: servant-lucid
+    version: 0.9.0.3
+    git: https://github.com/WaviLabs/servant-lucid
+    pantry-tree:
+      size: 4887
+      sha256: 5bc43bc87aa66f26323eef7700b2164abdf8c73dd1bb956de940a94cbea7ef27
+    commit: d872a8928e43cb8d1c17991b1ee96b08f1bfbf5a
+  original:
+    git: https://github.com/WaviLabs/servant-lucid
+    commit: d872a8928e43cb8d1c17991b1ee96b08f1bfbf5a
+- completed:
+    hackage: lucid-alpine-0.1.0.4@sha256:f996ec4052d0d5bfa34e6935586df0e8db355c40442efb22332fb564bdbc6756,1763
     pantry-tree:
       size: 416
-      sha256: 93c11307166154a2bf091cf32653cd896ea9653e1f213bc79229e38fa761978e
+      sha256: 2fcfec681863cdc87f8e0057a7c398417dcfacc73254727156cc08215ce06b43
   original:
-    hackage: lucid-alpine-0.1.0.2@sha256:a573246c4ac5dd3c0fa420c3bb19df0b105ae9baa3d13af066812fffe82f58f0,1742
+    hackage: lucid-alpine-0.1.0.4@sha256:f996ec4052d0d5bfa34e6935586df0e8db355c40442efb22332fb564bdbc6756,1763
 - completed:
-    hackage: lucid-htmx-0.1.0.2@sha256:322e04340544db00f37790293e842d687f0792b1a407e514e4f44c14c782ca09,1507
+    hackage: lucid-htmx-0.1.0.3@sha256:54c40c2e02c82c34643d65b3ca3fcd12b7db81530879bb808a82703bf2447b7f,1521
     pantry-tree:
       size: 498
-      sha256: 8002c39032a9ae5a62000303f58c117090c30bc238bf919dbb146957e0cac407
+      sha256: a0ae4c49b51975cad7126e0e65a69effe6e6b38a193c3c4b5df2ebce62674f99
   original:
-    hackage: lucid-htmx-0.1.0.2@sha256:322e04340544db00f37790293e842d687f0792b1a407e514e4f44c14c782ca09,1507
+    hackage: lucid-htmx-0.1.0.3@sha256:54c40c2e02c82c34643d65b3ca3fcd12b7db81530879bb808a82703bf2447b7f,1521
 - completed:
     hackage: postgresql-syntax-0.4@sha256:df8b65a33f4088eddad25cedbec814e5f34f8e8ae55065139b73bd6da0d66f21,4176
     pantry-tree:
@@ -46,13 +61,6 @@ packages:
       sha256: 1942e3259b02a2546bf1fc6fe7f956cbcce724f29c3feea8698ab90a465e499a
   original:
     hackage: postgresql-syntax-0.4@sha256:df8b65a33f4088eddad25cedbec814e5f34f8e8ae55065139b73bd6da0d66f21,4176
-- completed:
-    hackage: servant-lucid-0.9.0.2@sha256:693278d574dba7313e931200118424762c02682bbc654e8866be4e6d1c73d816,1803
-    pantry-tree:
-      size: 392
-      sha256: c5635bc53887b81087c3430341790d45cd4063340a0baa62bedd2e77ed4aa84d
-  original:
-    hackage: servant-lucid-0.9.0.2@sha256:693278d574dba7313e931200118424762c02682bbc654e8866be4e6d1c73d816,1803
 snapshots:
 - completed:
     size: 586069

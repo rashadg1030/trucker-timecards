@@ -66,9 +66,9 @@ library
     , directory
     , hasql
     , hasql-th
-    , lucid ==2.9.12.1
-    , lucid-alpine ==0.1.0.2
-    , lucid-htmx ==0.1.0.2
+    , lucid
+    , lucid-alpine ==0.1.0.4
+    , lucid-htmx ==0.1.0.3
     , mtl
     , profunctors
     , servant
@@ -97,9 +97,9 @@ executable trucker-timecards-exe
     , directory
     , hasql
     , hasql-th
-    , lucid ==2.9.12.1
-    , lucid-alpine ==0.1.0.2
-    , lucid-htmx ==0.1.0.2
+    , lucid
+    , lucid-alpine ==0.1.0.4
+    , lucid-htmx ==0.1.0.3
     , mtl
     , profunctors
     , servant
@@ -130,9 +130,9 @@ test-suite trucker-timecards-test
     , directory
     , hasql
     , hasql-th
-    , lucid ==2.9.12.1
-    , lucid-alpine ==0.1.0.2
-    , lucid-htmx ==0.1.0.2
+    , lucid
+    , lucid-alpine ==0.1.0.4
+    , lucid-htmx ==0.1.0.3
     , mtl
     , profunctors
     , servant

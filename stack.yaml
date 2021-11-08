@@ -38,11 +38,14 @@ packages:
 extra-deps:
 - hasql-th-0.4.0.9@sha256:56515d8d08d4c68e36899a46624ecd1505608cf6b4c24b5c33aee54bc76e6275,2245
 - headed-megaparsec-0.2.0.1@sha256:4bb2f1e68d2972e6b40ede202708c81b2e2fe83c454e439f27f47d1fdf7c8697,1571
-- lucid-2.9.12.1@sha256:f9e785add5e549f02de5790640cdf49deba32b8685e93c3bc1dee0f2e4ed5a9f,3100
-- lucid-alpine-0.1.0.2@sha256:a573246c4ac5dd3c0fa420c3bb19df0b105ae9baa3d13af066812fffe82f58f0,1742
-- lucid-htmx-0.1.0.2@sha256:322e04340544db00f37790293e842d687f0792b1a407e514e4f44c14c782ca09,1507
+- git: https://github.com/WaviLabs/lucid
+  commit: bd40149c16443256fb34a3e18146fb1499a82ae8
+- git: https://github.com/WaviLabs/servant-lucid
+  commit: d872a8928e43cb8d1c17991b1ee96b08f1bfbf5a
+- lucid-alpine-0.1.0.4@sha256:f996ec4052d0d5bfa34e6935586df0e8db355c40442efb22332fb564bdbc6756,1763
+- lucid-htmx-0.1.0.3@sha256:54c40c2e02c82c34643d65b3ca3fcd12b7db81530879bb808a82703bf2447b7f,1521
 - postgresql-syntax-0.4@sha256:df8b65a33f4088eddad25cedbec814e5f34f8e8ae55065139b73bd6da0d66f21,4176
-- servant-lucid-0.9.0.2@sha256:693278d574dba7313e931200118424762c02682bbc654e8866be4e6d1c73d816,1803
+
 #
 # extra-deps: []
 

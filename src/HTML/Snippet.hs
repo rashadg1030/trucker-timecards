@@ -48,22 +48,22 @@ toggle_ isDisabled isToggled = td_ [Tailwind.tableCell_ ""] $
         , role_ "switch"
         , if isDisabled then disabled_ "" else class_ ""
         , xOn_ "click" "toggled = !toggled"
-        , xBind_ "class" "{ 'bg-indigo-600': toggled, 'bg-gray-200': !toggled }"
+        , xBind_ "class" "{ 'bg-indigo-600': toggled, 'bg-gray-200': !(toggled) }"
         ] $ do
             span_ [class_ "sr-only"] "Use setting"
             span_ 
-                [ class_ "pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow ring-0 transition ease-in-out duration-200"
-                , xBind_ "class" "{ 'translate-x-5': toggled, 'translate-x-0': !toggled }"
+                [ class_ "pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                , xBind_ "class" "{ 'translate-x-5': toggled, 'translate-x-0': !(toggled) }"
                 ] $ do
                     span_
                         [class_ "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity opacity-0 ease-out duration-100"
-                        , xBind_ "class" "{ 'opacity-0 ease-out duration-100': toggled, 'opacity-100 ease-in duration-200': !toggled }"
+                        , xBind_ "class" "{ 'opacity-0 ease-out duration-100': toggled, 'opacity-100 ease-in duration-200': !(toggled) }"
                         ] $
                             svg_ [class_ "h-3 w-3 text-gray-400", fill_ "none", viewBox_ "0 0 12 12"] $
                                 path_ [d_ "M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2", stroke_ "currentColor", strokeWidth_ "2", strokeLinecap_ "round", strokeLinejoin_ "round"]
                     span_
                         [class_ "absolute inset-0 h-full w-full flex items-center justify-center transition-opacity opacity-100 ease-in duration-100"
-                        , xBind_ "class" "{ 'opacity-100 ease-in duration-200': toggled, 'opacity-0 ease-out duration-100': !toggled }"
+                        , xBind_ "class" "{ 'opacity-100 ease-in duration-200': toggled, 'opacity-0 ease-out duration-100': !(toggled) }"
                         ] $
                             svg_ [class_ "h-3 w-3 text-indigo-600", fill_ "currentColor", viewBox_ "0 0 12 12"] $
                                 path_ [d_ "M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"]
